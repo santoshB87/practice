@@ -1,0 +1,9 @@
+.vscode
+.idea
+*.pyc
+/reinstalledPackages.txt
+metastore_db
+derby.log
+spark_drivers.tar.gz
+/canary_*.py
+/venv
