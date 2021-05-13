@@ -1,0 +1,33 @@
+'''
+root
+ |-- MODEL: string (nullable = true)
+ |-- CODE: string (nullable = true)
+ |-- START_Time: struct (nullable = true)
+ |    |-- day: string (nullable = true)
+ |    |-- hour: string (nullable = true)
+ |    |-- minute: string (nullable = true)
+ |    |-- month: string (nullable = true)
+ |    |-- second: string (nullable = true)
+ |    |-- year: string (nullable = true)
+ |-- WEIGHT: string (nullable = true)
+ |-- REGISTED: struct (nullable = true)
+ |    |-- day: string (nullable = true)
+ |    |-- hour: string (nullable = true)
+ |    |-- minute: string (nullable = true)
+ |    |-- month: string (nullable = true)
+ |    |-- second: string (nullable = true)
+ |    |-- year: string (nullable = true)
+ |-- TOTAL: string (nullable = true)
+ |-- SCHEDULED: struct (nullable = true)
+ |    |-- day: long (nullable = true)
+ |    |-- hour: long (nullable = true)
+ |    |-- minute: long (nullable = true)
+ |    |-- month: long (nullable = true)
+ |    |-- second: long (nullable = true)
+ |    |-- year: long (nullable = true)
+ |-- PACKAGE: string (nullable = true)
+'''
+from pyspark.sql.functions import *
+data = {"MODEL": "abc", "CODE": "CODE1", "START_Time": {"day": "05", "hour": "08", "minute": "30", "month": "08", "second": "30", "year": "21"}, "WEIGHT": "231", "REGISTED": {"day": "05", "hour": "08", "minute": "30", "month": "08", "second": "30", "year": "21"}, "TOTAL": "1", "SCHEDULED": {"day": "05", "hour": "08", "minute": "30", "month": "08", "second": "30", "year": "21"},"PACKAGE": "CAR"}
+df = spark.read.json('/tesco_uk/Lev1/cmp/sample/data.json')
+df.withColumn('START_Time', concat(col('START_Time.year'), lit('-'), col('START_Time.month'), lit('-'), col('START_Time.day'), lit('-'), col('START_Time.hour'), lit('-'), col('START_Time.minute'), lit('-'), col('START_Time.second'))).withColumn('REGISTED',concat(col('REGISTED.year'), lit('-'), col('REGISTED.month'), lit('-'), col('REGISTED.day'), lit('-'), col('REGISTED.hour'), lit('-'), col('REGISTED.minute'), lit('-'), col('REGISTED.second'))).withColumn('SCHEDULED',concat(col('SCHEDULED.year'), lit('-'), col('SCHEDULED.month'), lit('-'), col('SCHEDULED.day'), lit('-'), col('SCHEDULED.hour'), lit('-'), col('SCHEDULED.minute'), lit('-'), col('SCHEDULED.second'))).show()
